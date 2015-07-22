@@ -19,29 +19,29 @@ public class MainActivity extends Activity {
 
         Button insertBtn = (Button) findViewById(R.id.insertBtn);
         insertBtn.setOnClickListener(new View.OnClickListener() {
-                                         public void onClick(View v) {
-                                             Toast.makeText(getApplicationContext(), "inset Button",
-                                                     Toast.LENGTH_LONG).show();
-                                         }
-                                     }
+                 public void onClick(View v) {
+                     Toast.makeText(getApplicationContext(), "inset Button",
+                             Toast.LENGTH_LONG).show();
+                 }
+             }
         );
 
         Button modifyBtn = (Button) findViewById(R.id.modifyBtn);
         modifyBtn.setOnClickListener(new View.OnClickListener() {
-                                         public void onClick(View v) {
-                                             Toast.makeText(getApplicationContext(), "modify Button",
-                                                     Toast.LENGTH_LONG).show();
-                                         }
-                                     }
+                 public void onClick(View v) {
+                     Toast.makeText(getApplicationContext(), "modify Button",
+                             Toast.LENGTH_LONG).show();
+                 }
+             }
         );
 
         Button deleteBtn = (Button) findViewById(R.id.deleteBtn);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
-                                         public void onClick(View v) {
-                                             Toast.makeText(getApplicationContext(), "delete Button",
-                                                     Toast.LENGTH_LONG).show();
-                                         }
-                                     }
+                 public void onClick(View v) {
+                     Toast.makeText(getApplicationContext(), "delete Button",
+                             Toast.LENGTH_LONG).show();
+                 }
+             }
         );
     }
 
