@@ -5,6 +5,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
@@ -13,7 +16,35 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button insertBtn = (Button) findViewById(R.id.insertBtn);
+        insertBtn.setOnClickListener(new View.OnClickListener() {
+                                         public void onClick(View v) {
+                                             Toast.makeText(getApplicationContext(), "inset Button",
+                                                     Toast.LENGTH_LONG).show();
+                                         }
+                                     }
+        );
+
+        Button modifyBtn = (Button) findViewById(R.id.modifyBtn);
+        modifyBtn.setOnClickListener(new View.OnClickListener() {
+                                         public void onClick(View v) {
+                                             Toast.makeText(getApplicationContext(), "modify Button",
+                                                     Toast.LENGTH_LONG).show();
+                                         }
+                                     }
+        );
+
+        Button deleteBtn = (Button) findViewById(R.id.deleteBtn);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+                                         public void onClick(View v) {
+                                             Toast.makeText(getApplicationContext(), "delete Button",
+                                                     Toast.LENGTH_LONG).show();
+                                         }
+                                     }
+        );
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
