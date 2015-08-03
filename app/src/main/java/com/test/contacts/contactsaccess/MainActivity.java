@@ -62,15 +62,15 @@ public class MainActivity extends Activity {
                     after = System.currentTimeMillis();
                     deleteResult = String.valueOf(after - before);
                     if(j==0)
-                        result1.setText("inset : " + insertResult + ", delete : " + deleteResult);
+                        result1.setText("insert : " + insertResult + ", delete : " + deleteResult);
                     else if(j==1)
-                        result2.setText("inset : " + insertResult + ", delete : " + deleteResult);
+                        result2.setText("insert : " + insertResult + ", delete : " + deleteResult);
                     else if(j==2)
-                        result3.setText("inset : " + insertResult + ", delete : " + deleteResult);
+                        result3.setText("insert : " + insertResult + ", delete : " + deleteResult);
                     else if(j==3)
-                        result4.setText("inset : " + insertResult + ", delete : " + deleteResult);
+                        result4.setText("insert : " + insertResult + ", delete : " + deleteResult);
                     else if(j==4)
-                        result5.setText("inset : " + insertResult + ", delete : " + deleteResult);
+                        result5.setText("insert : " + insertResult + ", delete : " + deleteResult);
                 }
             }
         });
