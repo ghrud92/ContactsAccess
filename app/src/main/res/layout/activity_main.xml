@@ -7,35 +7,42 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/onetimeBtn"
+        android:text="한번에"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp" />
+
+    <Button
         android:id="@+id/insertBtn"
         android:text="입력"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="49dp"
-        android:layout_marginStart="29dp" />
+        android:layout_alignTop="@+id/onetimeBtn"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp" />
 
     <Button
         android:id="@+id/deleteBtn"
         android:text="삭제"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/insertBtn"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="52dp"
-        android:layout_marginEnd="52dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/onetimeBtn"/>
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="text"
+        android:hint="result"
         android:layout_below="@+id/insertBtn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:textSize="25dp"/>
 
 </RelativeLayout>

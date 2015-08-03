@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
     protected String[] names = {"a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"};
     protected String[] numbers = {"010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010"};
     protected long before, after;
+    protected String insertResult, deleteResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,25 @@ public class MainActivity extends Activity {
             names[i] = names[i] + i;
             numbers[i] = numbers[i] +i;
         }
-        Toast.makeText(getApplicationContext(), names[0],Toast.LENGTH_LONG).show();
+
+        TextView result = (TextView) findViewById(R.id.result);
+
+        Button onetimeBtn = (Button) findViewById(R.id.onetimeBtn);
+        onetimeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                before = System.currentTimeMillis();
+                for (int i = 0; i < names.length; i++)
+                    insertContacts(names[i], numbers[i]);
+                after = System.currentTimeMillis();
+                insertResult = String.valueOf(after - before);
+                before = System.currentTimeMillis();
+                for (int i = 0; i < names.length; i++)
+                    deleteContacts(names[i]);
+                after = System.currentTimeMillis();
+                deleteResult = String.valueOf(after - before);
+            }
+        });
 
         Button insertBtn = (Button) findViewById(R.id.insertBtn);
         insertBtn.setOnClickListener(new View.OnClickListener() {
