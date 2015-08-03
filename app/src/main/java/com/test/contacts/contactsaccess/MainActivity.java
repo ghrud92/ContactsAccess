@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
     protected String[] names = {"a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"};
     protected String[] numbers = {"010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010"};
-    protected double before, after;
+    protected long before, after;
     protected String insertResult, deleteResult;
 
     @Override
@@ -40,23 +40,38 @@ public class MainActivity extends Activity {
             numbers[i] = numbers[i] +i;
         }
 
-        final TextView testresult = (TextView) findViewById(R.id.result);
+        final TextView result1 = (TextView) findViewById(R.id.result1);
+        final TextView result2 = (TextView) findViewById(R.id.result2);
+        final TextView result3 = (TextView) findViewById(R.id.result3);
+        final TextView result4 = (TextView) findViewById(R.id.result4);
+        final TextView result5 = (TextView) findViewById(R.id.result5);
 
         Button onetimeBtn = (Button) findViewById(R.id.onetimeBtn);
         onetimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                before = System.currentTimeMillis()/1000;
-                for (int i = 0; i < names.length; i++)
-                    insertContacts(names[i], numbers[i]);
-                after = System.currentTimeMillis()/1000;
-                insertResult = Double.toString(after - before);
-                before = System.currentTimeMillis();
-                for (int i = 0; i < names.length; i++)
-                    deleteContacts(names[i]);
-                after = System.currentTimeMillis();
-                deleteResult = Double.toString(after - before);
-                testresult.setText("inset time : "+insertResult+", delete time : "+deleteResult);
+                for(int j=0; j<5; j++) {
+                    before = System.currentTimeMillis();
+                    for (int i = 0; i < names.length; i++)
+                        insertContacts(names[i], numbers[i]);
+                    after = System.currentTimeMillis();
+                    insertResult = String.valueOf(after - before);
+                    before = System.currentTimeMillis();
+                    for (int i = 0; i < names.length; i++)
+                        deleteContacts(names[i]);
+                    after = System.currentTimeMillis();
+                    deleteResult = String.valueOf(after - before);
+                    if(j==0)
+                        result1.setText("inset : " + insertResult + ", delete : " + deleteResult);
+                    else if(j==1)
+                        result2.setText("inset : " + insertResult + ", delete : " + deleteResult);
+                    else if(j==2)
+                        result3.setText("inset : " + insertResult + ", delete : " + deleteResult);
+                    else if(j==3)
+                        result4.setText("inset : " + insertResult + ", delete : " + deleteResult);
+                    else if(j==4)
+                        result5.setText("inset : " + insertResult + ", delete : " + deleteResult);
+                }
             }
         });
 
