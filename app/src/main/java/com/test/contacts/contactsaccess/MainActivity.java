@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
     protected String[] names = {"a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"};
     protected String[] numbers = {"010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010"};
-    protected long before, after;
+    protected double before, after;
     protected String insertResult, deleteResult;
 
     @Override
@@ -40,22 +40,23 @@ public class MainActivity extends Activity {
             numbers[i] = numbers[i] +i;
         }
 
-        TextView result = (TextView) findViewById(R.id.result);
+        final TextView testresult = (TextView) findViewById(R.id.result);
 
         Button onetimeBtn = (Button) findViewById(R.id.onetimeBtn);
         onetimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                before = System.currentTimeMillis();
+                before = System.currentTimeMillis()/1000;
                 for (int i = 0; i < names.length; i++)
                     insertContacts(names[i], numbers[i]);
-                after = System.currentTimeMillis();
-                insertResult = String.valueOf(after - before);
+                after = System.currentTimeMillis()/1000;
+                insertResult = Double.toString(after - before);
                 before = System.currentTimeMillis();
                 for (int i = 0; i < names.length; i++)
                     deleteContacts(names[i]);
                 after = System.currentTimeMillis();
-                deleteResult = String.valueOf(after - before);
+                deleteResult = Double.toString(after - before);
+                testresult.setText("inset time : "+insertResult+", delete time : "+deleteResult);
             }
         });
 
