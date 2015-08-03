@@ -1,11 +1,17 @@
 package com.test.contacts.contactsaccess;
 
 import android.app.Activity;
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.net.Uri;
+import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,44 +20,28 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 
 public class MainActivity extends Activity {
     protected String[] names = {"abc", "def", "ghi"};
     protected String[] numbers = {"0106745","16546","6351864"};
-    protected int[] ids = {1,2,3};
-
-    TextView txt;
-    ListView list;
-    ContentValues cv;
-    Uri u;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        txt = (TextView)findViewById(R.id.text);
-        list = (ListView)findViewById(R.id.list);
-        Uri uri = getTheUri();
-        grantUriPermission("ContactsContract.CommonDataKinds.Phone.CONTENT_URI", uri, 2);
-        insertContacts(names, numbers, ids);
 
         Button insertBtn = (Button) findViewById(R.id.insertBtn);
         insertBtn.setOnClickListener(new View.OnClickListener() {
                                         public void onClick(View v) {
                                              Toast.makeText(getApplicationContext(), "inset Button",
                                                      Toast.LENGTH_LONG).show();
-                                            //insertContacts(names,numbers,ids);
+                                            for(int i=0;i<names.length;i++)
+                                                insertContacts(names[i],numbers[i]);
                                          }
              }
-        );
-
-        Button modifyBtn = (Button) findViewById(R.id.modifyBtn);
-        modifyBtn.setOnClickListener(new View.OnClickListener() {
-                                         public void onClick(View v) {
-                                             Toast.makeText(getApplicationContext(), "modify Button",
-                                                     Toast.LENGTH_LONG).show();
-                                         }
-                                     }
         );
 
         Button deleteBtn = (Button) findViewById(R.id.deleteBtn);
@@ -59,27 +49,54 @@ public class MainActivity extends Activity {
                                          public void onClick(View v) {
                                              Toast.makeText(getApplicationContext(), "delete Button",
                                                      Toast.LENGTH_LONG).show();
+                                             for(int i=0;i<names.length;i++)
+                                                 deleteContacts(names[i]);
                                          }
                                      }
         );
     }
 
-    public static Uri getTheUri() {
-        return Uri.parse("content://com.android.contacts/contacts");
-    }
-
-    protected void insertContacts(String[] names, String[] numbers, int[] ids) {
-        ContentValues cv = new ContentValues();
-        //this.grantUriPermission("com.test.contacts.contactsaccess", Uri.parse("content://com.android.contacts/contacts"), MODE_WORLD_WRITEABLE);
-        this.grantUriPermission("com.example.contactsdemo", Uri.parse("content://com.android.contacts/contacts"), MODE_WORLD_WRITEABLE);
-        for(int i = 0; i<names.length; i++) {
-            cv.put(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,names[i]);
-            cv.put(ContactsContract.CommonDataKinds.Phone.NUMBER,numbers[i]);
-            cv.put(ContactsContract.CommonDataKinds.Phone._ID,ids[i]);
-            u = getContentResolver().insert(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, cv);
+    private void insertContacts(String displayName, String number) {
+        ArrayList contentProviderOperations = new ArrayList();
+        //contentProviderOperations.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+          //      .withValue(ContactsContract.RawContacts.CONTACT_ID, null).withValue())
+        //insert raw contact using RawContacts.CONTENT_URI
+        contentProviderOperations.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null).withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
+        //insert contact display name using Data.CONTENT_URI
+        contentProviderOperations.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, displayName).build());
+        //insert mobile number using Data.CONTENT_URI
+        contentProviderOperations.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, number).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE).build());
+        try {
+            getApplicationContext().getContentResolver().applyBatch(ContactsContract.AUTHORITY, contentProviderOperations);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (OperationApplicationException e) {
+            e.printStackTrace();
         }
     }
 
+    private void deleteContacts(String displayName) {
+        ContentResolver cr = getContentResolver();
+        String where = ContactsContract.Data.DISPLAY_NAME + " = ? ";
+        String[] params = new String[] {displayName};
+
+        ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+        ops.add(ContentProviderOperation.newDelete(ContactsContract.RawContacts.CONTENT_URI)
+                .withSelection(where, params).build());
+
+        try {
+            cr.applyBatch(ContactsContract.AUTHORITY, ops);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (OperationApplicationException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
