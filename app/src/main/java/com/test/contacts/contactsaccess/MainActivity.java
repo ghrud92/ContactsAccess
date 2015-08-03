@@ -43,13 +43,11 @@ public class MainActivity extends Activity {
         Button insertBtn = (Button) findViewById(R.id.insertBtn);
         insertBtn.setOnClickListener(new View.OnClickListener() {
                                          public void onClick(View v) {
-                                             //Toast.makeText(getApplicationContext(), "inset Button",
-                                             //        Toast.LENGTH_LONG).show();
                                              before = System.currentTimeMillis();
                                              for (int i = 0; i < names.length; i++)
                                                  insertContacts(names[i], numbers[i]);
                                              after = System.currentTimeMillis();
-                                             Toast.makeText(getApplicationContext(), (int)(before - after),
+                                             Toast.makeText(getApplicationContext(), String.valueOf(after - before),
                                                      Toast.LENGTH_LONG).show();
                                          }
                                      }
@@ -58,10 +56,12 @@ public class MainActivity extends Activity {
         Button deleteBtn = (Button) findViewById(R.id.deleteBtn);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
                                          public void onClick(View v) {
-                                             Toast.makeText(getApplicationContext(), "delete Button",
-                                                     Toast.LENGTH_LONG).show();
+                                             before = System.currentTimeMillis();
                                              for (int i = 0; i < names.length; i++)
                                                  deleteContacts(names[i]);
+                                             after = System.currentTimeMillis();
+                                             Toast.makeText(getApplicationContext(), String.valueOf(after - before),
+                                                     Toast.LENGTH_LONG).show();
                                          }
                                      }
         );
