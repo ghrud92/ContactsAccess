@@ -25,23 +25,34 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends Activity {
-    protected String[] names = {"abc", "def", "ghi"};
-    protected String[] numbers = {"0106745","16546","6351864"};
+    protected String[] names = {"a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"};
+    protected String[] numbers = {"010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010","010"};
+    protected long before, after;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        for (int i=0;i<names.length;i++) {
+            names[i] = names[i] + i;
+            numbers[i] = numbers[i] +i;
+        }
+        Toast.makeText(getApplicationContext(), names[0],Toast.LENGTH_LONG).show();
+
         Button insertBtn = (Button) findViewById(R.id.insertBtn);
         insertBtn.setOnClickListener(new View.OnClickListener() {
-                                        public void onClick(View v) {
-                                             Toast.makeText(getApplicationContext(), "inset Button",
+                                         public void onClick(View v) {
+                                             //Toast.makeText(getApplicationContext(), "inset Button",
+                                             //        Toast.LENGTH_LONG).show();
+                                             before = System.currentTimeMillis();
+                                             for (int i = 0; i < names.length; i++)
+                                                 insertContacts(names[i], numbers[i]);
+                                             after = System.currentTimeMillis();
+                                             Toast.makeText(getApplicationContext(), (int)(before - after),
                                                      Toast.LENGTH_LONG).show();
-                                            for(int i=0;i<names.length;i++)
-                                                insertContacts(names[i],numbers[i]);
                                          }
-             }
+                                     }
         );
 
         Button deleteBtn = (Button) findViewById(R.id.deleteBtn);
@@ -49,7 +60,7 @@ public class MainActivity extends Activity {
                                          public void onClick(View v) {
                                              Toast.makeText(getApplicationContext(), "delete Button",
                                                      Toast.LENGTH_LONG).show();
-                                             for(int i=0;i<names.length;i++)
+                                             for (int i = 0; i < names.length; i++)
                                                  deleteContacts(names[i]);
                                          }
                                      }
